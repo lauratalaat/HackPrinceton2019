@@ -1,19 +1,42 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
-});
+import HomeScreen from './HomeScreen';
+import Bookmarks from './Bookmarks';
+import {
+  StyleSheet,
+  Text
+} from 'react-native';
+
+const TabNavigator = createBottomTabNavigator(
+  {
+    Camera: HomeScreen,
+    Starred: Bookmarks,
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let IconComponent = Ionicons;
+        let iconName;
+        if (routeName === 'Camera') {
+          iconName = `ios-camera${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Starred') {
+          iconName = `ios-bookmark`;
+        }
+        return <IconComponent name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+  }
+);
+const AppContainer = createAppContainer(TabNavigator);
 
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <AppContainer />
     );
   }
 }
