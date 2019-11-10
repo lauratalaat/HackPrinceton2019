@@ -22,7 +22,7 @@ const TabNavigator = createBottomTabNavigator(
         let IconComponent = Ionicons;
         let iconName;
         if (routeName === 'Camera') {
-          iconName = `ios-camera${focused ? '' : '-outline'}`;
+          iconName = `ios-camera`;
         } else if (routeName === 'Starred') {
           iconName = `ios-bookmark`;
         }
